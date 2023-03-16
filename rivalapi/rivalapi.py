@@ -27,7 +27,7 @@ class RivalAPI(object):
         return await self.request(method="get",endpoint=f"tiktok",params=f"?url={url}")
             
     async def tiktok_userinfo(self,username:str):
-        return await self.request(method="get",endpoint="tiktok/userinfo"params=f"?username={username}")
+        return await self.request(method="get",endpoint="tiktok/userinfo",params=f"?username={username}")
             
     async def medal(self,url:str):
         return await self.request(method="get",endpoint="medal",params=f"?url={url}")
