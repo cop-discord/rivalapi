@@ -59,7 +59,7 @@ class RivalAPI(object):
     async def oxford(self,word:str,type:str="american_english"):
         return await self.request(method='get',endpoint='oxford',params=f"?word={word}&type={type}")
     
-    async def lastfm_chart(self,username:str,filename:str="lastfm",size:str="3x3",chart_type:str="album",timeperiod:str="alltime",limit:int=15)
+    async def lastfm_chart(self,username:str,filename:str="lastfm",chart_size:str="3x3",chart_type:str="album",timeperiod:str="alltime",limit:int=15)
         async with aiohttp.ClientSession() as session:
-            async with session.get(self.base_url+f"lastfm/chart?username={username}&chart_type={chart_type}&timeperiod={timeperiod}&limit={limit}",headers={'api-key':self.__api_key}) as response:
+            async with session.get(self.base_url+f"lastfm/chart?username={username}&size={chart_size}&chart_type={chart_type}&timeperiod={timeperiod}&limit={limit}",headers={'api-key':self.__api_key}) as response:
                 return discord.File(fp=io.BytesIO(await response.read()),filename=f"{filename}.png")
