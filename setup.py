@@ -8,7 +8,6 @@ setup(
   author = 'Cop',                   # Type in your name
   author_email = 'z@rival.rocks',      # Type in your E-Mail
   url = 'https://github.com/cop-discord/rivalapi/',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/cop-discord/rivalapi/archive/v_001.tar.gz',    # I explain this later on
   keywords = ['rivalapi', 'rival', 'api'],   # Keywords that define your package best
   install_requires=[
           'aiohttp','orjson','asyncio'
