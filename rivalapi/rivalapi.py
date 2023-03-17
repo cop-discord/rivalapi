@@ -1,4 +1,4 @@
-import aiohttp,asyncio,orjson,typing,discord
+import aiohttp,asyncio,orjson,typing,discord,io
 from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest
 
 
