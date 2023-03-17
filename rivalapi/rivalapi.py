@@ -87,7 +87,9 @@ class RivalAPI(object):
     async def weheartit_userinfo(self,username:str):
         try:
             request = await self.request(method='get',endpoint='weheartit/user',params=f"?username={username}")
-            return WeHeartItUser(dict=request)
+            if not request.get('user'):
+                return None
+            return WeHeartItUser(dict=request['user'])
         except Exception as e:
             print(e)
             return None
