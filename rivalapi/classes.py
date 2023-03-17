@@ -1,110 +1,360 @@
 import typing
 from dataclasses import dataclass
 
-@dataclass
-class WeHeartItUser:
-    username: str = None
-    display:  str = None
-    avatar:  str = None
-    posts:  int = 0
-    hearts:  int = 0
-    link:  str = None
-    location:  str = None
-    collections:  int = 0
-    followers:  int = 0
-    following:  int = 0
-    badges: typing.Union[list,str,None] = None
 
-@dataclass
-class GoogleImage:
-    url:  str = None
-    source:  str = None
-    title:  str = None
-    domain:  str = None
+class WeHeartItUser(object):
+    def __init__(self,dict):
+        self.dict = dict
 
-@dataclass
-class GoogleSearch:
-    title: str = None
-    link: str = None
-    snippet: str = None
+    @property
+    def username(self):
+        if self.dict.get("username"):
+            return self.dict['username']
 
-@dataclass
-class Oxford:
-    status: bool = False
-    message: str = None
-    word: str = None
-    wordtype: str = None
-    pronounciation: str = None
-    definition: str = None
-    examples: list = None
+    @property
+    def display(self):
+        if self.dict.get("display"):
+            return self.dict['display']
+
+    @property
+    def avatar(self):
+        return self.dict.get("avatar")
+
+    @property
+    def posts(self):
+        return self.dict.get("posts")
+
+    @property
+    def hearts(self):
+        return self.dict.get("hearts")
+
+    @property
+    def link(self):
+        return self.dict.get("link")
+
+    @property
+    def location(self):
+        return self.dict.get("location")
+
+    @property
+    def collections(self):
+        return self.dict.get("collections")
+
+    @property
+    def followers(self):
+        return self.dict.get("followers")
+
+    @property
+    def following(self):
+        return self.dict.get("following")
+
+    @property
+    def badges(self):
+        return self.dict.get("badges")
+
+class GoogleImage(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def url(self):
+        if self.dict.get("url"):
+            return self.dict['url']
+
+    @property
+    def source(self):
+        if self.dict.get("source"):
+            return self.dict['source']
+
+    @property
+    def title(self):
+        if self.dict.get("title"):
+            return self.dict['title']
+
+    @property
+    def domain(self):
+        if self.dict.get("domain"):
+            return self.dict['domain']
+
+class GoogleImageRequest(object):
+    def __init__(self,dict):
+        self.dic = dict
+        status=self.dic['status']
+
+    @property
+    def results(self):
+        return [GoogleImage(dict=res) for res in self.dic['results']]
+
+
+class GoogleSearch(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def title(self):
+        return self.dict.get('title')
+
+    @property
+    def link(self):
+        return self.dict.get('link')
+
+    @property
+    def snippet(self):
+        return self.dict.get('snippet')
+
+class GoogleSearchRequest(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def results(self):
+        return [GoogleSearch(res) for res in self.dict['results']]
+
+
+class Oxford(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def status(self):
+        return self.dict.get('status')
+
+    @property
+    def message(self):
+        return self.dict.get('message')
+
+    @property
+    def word(self):
+        return self.dict.get("word")
+
+    @property
+    def wordtype(self):
+        return self.dict.get("wordtype")
+
+    @property
+    def pronounciation(self):
+        return self.dict.get("pronounciation")
+
+    @property
+    def definition(self):
+        return self.dict.get("definition")
+
+    @property
+    def examples(self):
+        return self.dict.get("examples")
 
 @dataclass
 class UwUify:
     text: str = None
 
-@dataclass
-class TwitterUser:
-    error: str = None
-    username: str = None
-    nickname: str = None
-    url: str = None
-    id: int = None
-    bio: str = None
-    location: str = None
-    avatar_url: str = None
-    banner_url: str = None
-    created_at: float = None
-    verified: str = None
-    private: str = None
-    followers: str = None
-    following: str = None
-    tweets: str = None
-    likes: str = None
-    raw_followers: int = None
-    raw_following: int = None
-    raw_tweets: int = None
-    raw_likes: int = None
-    color: int = None
+class TwitterUser(object):
+    def __init__(self,dict):
+        self.dict = dict
 
-@dataclass
-class TwitterAuthor:
-    avatar: str = None
-    screen_name: str = None
+    @property
+    def error(self):
+        return self.dict.get("error")
 
-@dataclass
-class TwitterMedia:
-    image: str = None
-    video: str = None
+    @property
+    def username(self):
+        return self.dict.get("username")
 
-@dataclass
-class TwitterPost:
-    nsfw: str = None
-    color: int = None
-    timestamp: int = None
-    text: str = None
-    url: str = None
-    like_count: str = None
-    retweet_count: str = None
-    raw_like_count: int = None
-    raw_retweet_count: int = None
-    footer_url: str = None
-    author: list[TwitterAuthor] = None
-    media: list[TwitterMedia] = None
+    @property
+    def nickname(self):
+        return self.dict.get("nickname")
 
-@dataclass
-class TwitchUser:
-    username: str = None
-    display_name: str = None
-    followers: str = None
-    viewers: str = None
-    created_at: int = None
-    description: str = None
-    avatar: str = None
+    @property
+    def url(self):
+        return self.dict.get("url")
+
+    @property
+    def id(self):
+        return self.dict.get("id")
+
+    @property
+    def bio(self):
+        return self.dict.get("bio")
+
+    @property
+    def location(self):
+        return self.dict.get("location")
+
+    @property
+    def avatar_url(self):
+        return self.dict.get("avatar_url")
+
+    @property
+    def banner_url(self):
+        return self.dict.get("banner_url")
+
+    @property
+    def created_at(self):
+        return self.dict.get("created_at")
+
+    @property
+    def verified(self):
+        return self.dict.get("verified")
+
+    @property
+    def private(self):
+        return self.dict.get("private")
+
+    @property
+    def followers(self):
+        return self.dict.get("followers")
+
+    @property
+    def following(self):
+        return self.dict.get("following")
+
+    @property
+    def tweets(self):
+        return self.dict.get("tweets")
+
+    @property
+    def likes(self):
+        return self.dict.get("likes")
+
+    @property
+    def raw_followers(self):
+        return self.dict.get("raw_followers")
+
+    @property
+    def raw_following(self):
+        return self.dict.get("raw_following")
+
+    @property
+    def raw_tweets(self):
+        return self.dict.get("raw_tweets")
+
+    @property
+    def raw_likes(self):
+        return self.dict.get("raw_likes")
+
+    @property
+    def color(self):
+        return self.dict.get("color")
+
+class TwitterAuthor(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def screen_name(self):
+        return self.dict.get("screen_name")
+
+    @property
+    def avatar(self):
+        return self.dict.get("avatar")
+
+class TwitterMedia(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def image(self):
+        return self.dict.get("image")
+
+    @property
+    def video(self):
+        return self.dict.get("video")
+
+class TwitterPost(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def nsfw(self):
+        return self.dict.get("nsfw")
+
+    @property
+    def color(self):
+        return self.dict.get('color')
+
+    @property
+    def timestamp(self):
+        return self.dict.get("timestamp")
+
+    @property
+    def text(self):
+        return self.dict.get("text")
+
+    @property
+    def url(self):
+        return self.dict.get("url")
+
+    @property
+    def like_count(self):
+        return self.dict.get("like_count")
+
+    @property
+    def retweet_count(self):
+        return self.dict.get('retweet_count')
+
+    @property
+    def raw_like_count(self):
+        return self.dict.get("raw_like_count")
+
+    @property
+    def raw_retweet_count(self):
+        return self.dict.get('raw_retweet_count')
+
+    @property
+    def author(self):
+        return TwitterAuthor(dict=self.dict['author'])
+
+    @property
+    def media(self):
+        return [TwitterMedia(dict=res) for res in self.dict['media']]
+
+class TwitchUser(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def username(self):
+        return self.dict.get('username')
+
+    @property
+    def display_name(self):
+        return self.dict.get('display_name')
+
+    @property
+    def followers(self):
+        return self.dict.get('followers')
+
+    @property
+    def viewers(self):
+        return self.dict.get('viewers')
+
+    @property
+    def created_at(self):
+        return self.dict.get("created_at")
+
+    @property
+    def description(self):
+        return self.dict.get('description')
+
+    @property
+    def avatar(self):
+        return self.dict.get('avatar')
 
 
+class MedalPost(object):
+    def __init__(self,dict):
+        self.dict = dict
 
+    @property
+    def title(self):
+        return self.dict.get("title")
 
+    @property
+    def video(self):
+        return self.dict.get('video')
 
+    @property
+    def url(self):
+        return self.dict.get('url')
 
 
 
