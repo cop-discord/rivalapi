@@ -10,7 +10,7 @@ class RivalAPI(object):
     async def request(self,method:str,endpoint:str,params:typing.Any):
         async with aiohttp.ClientSession(headers={'api-key':self.__api_key}) as session:
             if method == "get":
-                async with session.get(self.base_url+endpoint+params.replace(' ','%22'),headers={'api-key':self.__api_key}) as response:
+                async with session.get(self.base_url+endpoint+params.replace(' ','%20'),headers={'api-key':self.__api_key}) as response:
                     if 'uwuify' not in endpoint:
                         if response.status == 404:
                             return None
@@ -70,7 +70,7 @@ class RivalAPI(object):
 
     async def google_images(self,query:str,safe:bool=False):
          try:
-            request = await self.request(method='post',endpoint='google/image',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
+            request = await self.request(method='post',endpoint='google/image',params={'query':query.replace(' ','%20'),'safe':f'{safe}'})
             return GoogleImageRequest(dict=request)
          except Exception as e:
             print(e)
@@ -78,7 +78,7 @@ class RivalAPI(object):
 
     async def google_search(self,query:str,safe:bool=False):
         try:
-            request = await self.request(method='post',endpoint='google/search',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
+            request = await self.request(method='post',endpoint='google/search',params={'query':query.replace(' ','%20'),'safe':f'{safe}'})
             return GoogleSearchRequest(dict=request)
         except Exception as e:
             print(e)
