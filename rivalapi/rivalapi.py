@@ -47,7 +47,7 @@ class RivalAPI(object):
     async def twitter_userinfo(self,username:str):
         try:
             request = await self.request(method="get",endpoint="twitter/user",params=f"?username={username}")
-            return TwitterUser(dict=response)
+            return TwitterUser(dict=request)
         except Exception as e:
             print(e)
             return None
