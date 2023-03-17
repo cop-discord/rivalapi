@@ -40,7 +40,6 @@ class RivalAPI(object):
         try:
             request = await self.request(method="get",endpoint="medal",params=f"?url={url}")
             return MedalPost(dict=request)
-            return MedalPost(request['video'],request['title'],request['url'])
         except Exception as e:
             print(e)
             return None
@@ -70,12 +69,10 @@ class RivalAPI(object):
             return None
 
     async def google_images(self,query:str,safe:bool=False):
-#        try:
-         if query:
+         try:
             request = await self.request(method='post',endpoint='google/image',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
             return GoogleImageRequest(dict=request)
-            return [GoogleImage(res['url'],res['source'],res['title'],res['domain']) for res in request['results']]
-#        except Exception as e:
+         except Exception as e:
             print(e)
             return e
 
@@ -83,7 +80,6 @@ class RivalAPI(object):
         try:
             request = await self.request(method='post',endpoint='google/search',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
             return GoogleSearchRequest(dict=request)
-            return [GoogleSearch(res['title'],res['link'],res['snippet']) for res in request['results']]
         except Exception as e:
             print(e)
             return None
@@ -92,7 +88,6 @@ class RivalAPI(object):
         try:
             request = await self.request(method='get',endpoint='weheartit/user',params=f"?username={username}")
             return WeHeartItUser(dict=request)
-            return WeHeartItUser(request['username'],request['display'],request['avatar'],request['posts'],request['hearts'],request['link'],request['location'],request['collections'],request['followers'],request['following'],request['badges'])
         except Exception as e:
             print(e)
             return None
@@ -107,7 +102,6 @@ class RivalAPI(object):
         try:
             request =await self.request(method='get',endpoint='oxford',params=f"?word={word}&type={type}")
             return Oxford(dict=request)
-            return Oxford(request['status'],request['message'],request['word'],request['wordtype'],request['pronounciation'],request['definition'],request['examples'])
         except Exception as e:
             print(e)
             return None
