@@ -1,5 +1,6 @@
 import aiohttp,asyncio,orjson,typing,discord
-from classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor
+from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest
+
 
 class RivalAPI(object):
     def __init__(self, api_key):
@@ -9,7 +10,7 @@ class RivalAPI(object):
     async def request(self,method:str,endpoint:str,params:typing.Any):
         async with aiohttp.ClientSession(headers={'api-key':self.__api_key}) as session:
             if method == "get":
-                async with session.get(self.base_url+endpoint+params,headers={'api-key':self.__api_key}) as response:
+                async with session.get(self.base_url+endpoint+params.replace(' ','%22'),headers={'api-key':self.__api_key}) as response:
                     if 'uwuify' not in endpoint:
                         if response.status == 404:
                             return None
@@ -38,6 +39,7 @@ class RivalAPI(object):
     async def medal(self,url:str):
         try:
             request = await self.request(method="get",endpoint="medal",params=f"?url={url}")
+            return MedalPost(dict=request)
             return MedalPost(request['video'],request['title'],request['url'])
         except Exception as e:
             print(e)
@@ -46,7 +48,7 @@ class RivalAPI(object):
     async def twitter_userinfo(self,username:str):
         try:
             request = await self.request(method="get",endpoint="twitter/user",params=f"?username={username}")
-            return TwitterUser(request['error'],request['username'],request['nickname'],request['url'],request['id'],request['bio'],request['location'],request['avatar_url'],request['banner_url'],request['created_at'],request['verified'],request['private'],request['followers'],request['following'],request['tweets'],request['likes'],request['raw_followers'],request['raw_following'],request['raw_tweets'],request['raw_likes'],request['color'])
+            return TwitterUser(dict=response)
         except Exception as e:
             print(e)
             return None
@@ -54,7 +56,7 @@ class RivalAPI(object):
     async def twitter_post(self,url:str):
         try:
             request = await self.request(method='get',endpoint='twitter/post',params=f'?url={url}')
-            return TwitterPost(request['nsfw'],request['color'],request['timestamp'],request['text'],request['url'],request['like_count'],request['retweet_count'],request['raw_like_count'],request['raw_retweet_count'],request['footer_url'],TwitterAuthor(request['author']),TwitterMedia(request['media']))
+            return TwitterPost(dict=request)
         except Exception as e:
             print(e)
             return None
@@ -62,22 +64,25 @@ class RivalAPI(object):
     async def twitch(self,username:str):
         try:
             request = await self.request(method='get',endpoint='twitch',params=f'?username={username}')
-            return TwitchUser(request['username'],request['display_name'],request['followers'],request['viewers'],request['created_at'],request['description'],request['avatar'])
+            return TwitchUser(dict=request)
         except Exception as e:
             print(e)
             return None
 
     async def google_images(self,query:str,safe:bool=False):
-        try:
-            request = await self.request(method='post',endpoint='google/images',params={'query':query,'safe':f'{safe}'})
+#        try:
+         if query:
+            request = await self.request(method='post',endpoint='google/image',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
+            return GoogleImageRequest(dict=request)
             return [GoogleImage(res['url'],res['source'],res['title'],res['domain']) for res in request['results']]
-        except Exception as e:
+#        except Exception as e:
             print(e)
-            return None
+            return e
 
     async def google_search(self,query:str,safe:bool=False):
         try:
-            request = await self.request(method='post',endpoint='google/search',params={'query':query,'safe':f'{safe}'})
+            request = await self.request(method='post',endpoint='google/search',params={'query':query.replace(' ','%22'),'safe':f'{safe}'})
+            return GoogleSearchRequest(dict=request)
             return [GoogleSearch(res['title'],res['link'],res['snippet']) for res in request['results']]
         except Exception as e:
             print(e)
@@ -86,6 +91,7 @@ class RivalAPI(object):
     async def weheartit_userinfo(self,username:str):
         try:
             request = await self.request(method='get',endpoint='weheartit/user',params=f"?username={username}")
+            return WeHeartItUser(dict=request)
             return WeHeartItUser(request['username'],request['display'],request['avatar'],request['posts'],request['hearts'],request['link'],request['location'],request['collections'],request['followers'],request['following'],request['badges'])
         except Exception as e:
             print(e)
@@ -100,6 +106,7 @@ class RivalAPI(object):
     async def oxford(self,word:str,type:str="american_english"):
         try:
             request =await self.request(method='get',endpoint='oxford',params=f"?word={word}&type={type}")
+            return Oxford(dict=request)
             return Oxford(request['status'],request['message'],request['word'],request['wordtype'],request['pronounciation'],request['definition'],request['examples'])
         except Exception as e:
             print(e)
