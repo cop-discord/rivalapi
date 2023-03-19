@@ -1,3 +1,3 @@
 from .rivalapi import RivalAPI
-
-__all__=['RivalAPI']
+from .rivalapi import format_integer
+__all__=['RivalAPI','format_integer']
