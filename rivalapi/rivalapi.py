@@ -2,7 +2,7 @@ import aiohttp,asyncio,orjson,typing,discord,io
 from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest
 import humanize
 
-def format_int(value:int):
+def format_integer(value:int):
     val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
     return val
 
