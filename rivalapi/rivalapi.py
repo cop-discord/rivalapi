@@ -1,5 +1,5 @@
 import aiohttp,asyncio,orjson,typing,discord,io
-from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest
+from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
 import humanize
 
 def format_integer(value:int):
@@ -38,8 +38,9 @@ class RivalAPI(object):
         return await self.request(method="get",endpoint=f"tiktok",params=f"?url={url}")
             
     async def tiktok_userinfo(self,username:str):
-        return await self.request(method="get",endpoint="tiktok/userinfo",params=f"?username={username}")
-            
+        request = await self.request(method="get",endpoint="tiktok/userinfo",params=f"?username={username}")
+        return TikTokUser(dict=request)
+    
     async def medal(self,url:str):
         try:
             request = await self.request(method="get",endpoint="medal",params=f"?url={url}")
