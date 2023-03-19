@@ -1,6 +1,61 @@
 import typing
 from dataclasses import dataclass
 
+class TikTokUser(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def username(self):
+        return self.dict.get("username")
+
+    @property
+    def display(self):
+        return self.dict.get("display")
+
+    @property
+    def followers(self):
+        return self.dict.get("followers")
+
+    @property
+    def following(self):
+        return self.dict.get("following")
+
+    @property
+    def likes(self):
+        return self.dict.get("likes")
+
+    @property
+    def verified(self):
+        return self.dict.get("verified")
+
+    @property
+    def private(self):
+        return self.dict.get("private")
+
+    @property
+    def bio(self):
+        return self.dict.get("bio")
+
+    @property
+    def url(self):
+        return self.dict.get("url")
+
+    @property
+    def avatar(self):
+        return self.dict.get("avatar")
+
+    @property
+    def avatar_color(self):
+        return int(self.dict.get("avatar_color"),16)
+
+    @property
+    def tiktok_logo(self):
+        return self.dict.get("tiktok_logo")
+
+    @property
+    def tiktok_color(self):
+        return self.dict.get("tiktok_color")
 
 class WeHeartItUser(object):
     def __init__(self,dict):
