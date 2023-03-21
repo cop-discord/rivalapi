@@ -5,6 +5,8 @@ def format_integer(value:int):
     val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
     return val
 
+# Made by cop
+
 class TikTokUser(object):
     def __init__(self,dict):
         self.dict = dict
