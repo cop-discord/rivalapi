@@ -191,6 +191,10 @@ class GoogleImage(object):
         if self.dict.get("domain"):
             return self.dict['domain']
 
+    @property
+    def color(self):
+        return self.dict.get("color")
+
 class GoogleImageRequest(object):
     def __init__(self,dict):
         self.dic = dict
