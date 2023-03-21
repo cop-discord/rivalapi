@@ -1,5 +1,9 @@
 import typing
 from dataclasses import dataclass
+import humanize
+def format_integer(value:int):
+    val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
+    return val
 
 class TikTokUser(object):
     def __init__(self,dict):
@@ -16,14 +20,35 @@ class TikTokUser(object):
     @property
     def followers(self):
         return self.dict.get("followers")
+    
+    @property
+    def formatted_followers(self):
+        try:
+            return format_integer(self.dict.get("followers"))
+        except:
+            return None
 
     @property
     def following(self):
         return self.dict.get("following")
+    
+    @property
+    def formatted_following(self):
+        try:
+            return format_integer(self.dict.get("following"))
+        except:
+            return None
 
     @property
     def likes(self):
         return self.dict.get("likes")
+    
+    @property
+    def formatted_likes(self):
+        try:
+            return format_integer(self.dict.get("likes"))
+        except:
+            return None
 
     @property
     def verified(self):
@@ -78,10 +103,24 @@ class WeHeartItUser(object):
     @property
     def posts(self):
         return self.dict.get("posts")
+    
+    @property
+    def formatted_posts(self):
+        try:
+            return format_integer(self.dict.get('posts'))
+        except:
+            return None
 
     @property
     def hearts(self):
         return self.dict.get("hearts")
+
+    @property
+    def formatted_hearts(self):
+        try:
+            return format_integer(self.dict.get('hearts'))
+        except:
+            return None
 
     @property
     def link(self):
@@ -94,14 +133,35 @@ class WeHeartItUser(object):
     @property
     def collections(self):
         return self.dict.get("collections")
+    
+    @property
+    def formatted_collections(self):
+        try:
+            return format_integer(self.dict.get('collections'))
+        except:
+            return None
 
     @property
     def followers(self):
         return self.dict.get("followers")
+    
+    @property
+    async def formatted_followers(self):
+        try:
+            return format_integer(self.dict.get("followers"))
+        except:
+            return None
 
     @property
     def following(self):
         return self.dict.get("following")
+    
+    @property
+    def formatted_following(self):
+        try:
+            return format_integer(self.dict.get('following'))
+        except:
+            return None
 
     @property
     def badges(self):
@@ -259,16 +319,46 @@ class TwitterUser(object):
         return self.dict.get("followers")
 
     @property
+    def formatted_followers(self):
+        try:
+            return format_integer(self.dict.get('raw_followers'))
+        except:
+            return None
+
+    @property
     def following(self):
         return self.dict.get("following")
+
+    @property
+    def formatted_following(self):
+        try:
+            return format_integer(self.dict.get('raw_following'))
+        except:
+            return None
+
 
     @property
     def tweets(self):
         return self.dict.get("tweets")
 
     @property
+    def formatted_tweets(self):
+        try:
+            return format_integer(self.dict.get('raw_tweets'))
+        except:
+            return None
+
+    @property
     def likes(self):
         return self.dict.get("likes")
+    
+    @property
+    def formatted_followers(self):
+        try:
+            return format_integer(self.dict.get('raw_followers'))
+        except:
+            return None
+
 
     @property
     def raw_followers(self):
@@ -343,8 +433,22 @@ class TwitterPost(object):
         return self.dict.get("like_count")
 
     @property
+    def formatted_like_count(self):
+        try:
+            return format_integer(self.dict.get('raw_like_count'))
+        except:
+            return None
+
+    @property
     def retweet_count(self):
         return self.dict.get('retweet_count')
+    
+    @property
+    def formatted_retweet_count(self):
+        try:
+            return format_integer(self.dict.get('raw_retweet_count'))
+        except:
+            return None
 
     @property
     def raw_like_count(self):
