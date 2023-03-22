@@ -187,17 +187,12 @@ class WeHeartItUser(object):
     @property
     def badges(self):
         badge_obj=['verified','premium','writer','heartist']
-        final={}
+        final={'verified':False,'premium':False,'writer':False,'heartist':False}
         if isinstance(self.dict.get('badges'),list):
             for b in self.dict.get("badges"):
-                if b in badge_obj:
-                    final[b]=True
-                else:
-                    final[b]=False
+                final[b]=True
             return WeHeartItBadges(dict=final)
         else:
-            for b in badge_obj:
-                final[b]=False
             return WeHeartItBadges(dict=final)
 
 class GoogleImage(object):
