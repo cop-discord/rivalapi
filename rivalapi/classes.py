@@ -12,27 +12,19 @@ class WeHeartItBadges(object):
 
     @property
     def premium(self):
-        if "premium" in self.dict:
-            return True
-        return False
+        return self.dict.get("premium")
 
     @property
     def heartist(self):
-        if "heartist" in self.dict:
-            return True
-        return False
+        return self.dict.get("heartist")
 
     @property
     def writer(self):
-        if "writer" in self.dict:
-            return True
-        return False
+        return self.dict.get("writer")
 
     @property
     def verified(self):
-        if "verified" in self.dict:
-            return True
-        return False
+        return self.dict.get("verified")
 
 class TikTokUser(object):
     def __init__(self,dict):
@@ -203,7 +195,10 @@ class WeHeartItUser(object):
                 else:
                     final[b]=False
             return WeHeartItBadges(dict=final)
-        return self.dict.get("badges")
+        else:
+            for b in badge_obj:
+                final[b]=False
+            return WeHeartItBadges(dict=final)
 
 class GoogleImage(object):
     def __init__(self,dict):
