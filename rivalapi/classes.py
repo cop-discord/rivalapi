@@ -194,8 +194,15 @@ class WeHeartItUser(object):
 
     @property
     def badges(self):
+        badge_obj=['verified','premium','writer','heartist']
+        final={}
         if isinstance(self.dict.get('badges'),list):
-            return WeHeartItBadges(dict=self.dict.get("badges"))
+            for b in self.dict.get("badges"):
+                if b in badge_obj:
+                    final[b]=True
+                else:
+                    final[b]=False
+            return WeHeartItBadges(dict=final)
         return self.dict.get("badges")
 
 class GoogleImage(object):
