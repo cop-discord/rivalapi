@@ -6,6 +6,33 @@ def format_integer(value:int):
     return val
 
 # Made by cop
+class WeHeartItBadges(object):
+    def __init__(self,dict):
+        self.dict = dict
+
+    @property
+    def premium(self):
+        if "premium" in self.dict:
+            return True
+        return False
+
+    @property
+    def heartist(self):
+        if "heartist" in self.dict:
+            return True
+        return False
+
+    @property
+    def writer(self):
+        if "writer" in self.dict:
+            return True
+        return False
+
+    @property
+    def verified(self):
+        if "verified" in self.dict:
+            return True
+        return False
 
 class TikTokUser(object):
     def __init__(self,dict):
@@ -167,6 +194,8 @@ class WeHeartItUser(object):
 
     @property
     def badges(self):
+        if isinstance(self.dict.get('badges'),list):
+            return WeHeartItBadges(dict=self.dict.get("badges"))
         return self.dict.get("badges")
 
 class GoogleImage(object):
