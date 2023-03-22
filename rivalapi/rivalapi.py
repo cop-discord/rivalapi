@@ -65,6 +65,14 @@ class RivalAPI(object):
             print(e)
             return None
 
+    async def tags(self,discriminator:str):
+        try:
+            request = await self.request(method="get",endpoint="/tags",params=None)
+            tags = reversed(request[discriminator])
+            return tags
+        except Exception as e:
+            return None
+
     async def twitch(self,username:str):
         try:
             request = await self.request(method='get',endpoint='twitch',params=f'?username={username}')
