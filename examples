@@ -1,1 +1,38 @@
+# Basic Google Image Result Iteration #
+from rivalapi.rivalapi import RivalAPI,format_integer
+rival=RivalAPI("put your api key here")
+results=(await rival.google_images(query="coffee",safe=True)).results
+embeds=[]
+for result in results:
+    embeds.append(discord.Embed(description=result.title,color=result.color,url=result.domain).set_thumbnail(url=result.url))
+return embeds
 
+# Each Response with Their specific properties #
+• GoogleImageRequest:
+  - list(GoogleImage)
+    GoogleImage.url = image
+    GoogleImage.site = website
+    GoogleImage.title = title
+    GoogleImage.color = image color
+    GoogleImage.source = source
+
+• GoogleSearchRequest:
+  - list(GoogleSearch)
+    GoogleSearch.snippet = description
+    GoogleSearch.link = link
+    GoogleSearch.title = title
+
+{<class 'rivalapi.classes.GoogleImage'>: 'url', 'source', 'title', 'domain', 'color'
+<class 'rivalapi.classes.GoogleImageRequest'>: 'results'
+<class 'rivalapi.classes.GoogleSearch'>: 'title', 'link', 'snippet'
+<class 'rivalapi.classes.GoogleSearchRequest'>: 'results'
+<class 'rivalapi.classes.MedalPost'>: 'title', 'video', 'url'
+<class 'rivalapi.classes.Oxford'>: 'status', 'message', 'word', 'wordtype', 'pronounciation', 'definition', 'examples'
+<class 'rivalapi.classes.TikTokUser'>: 'username', 'display', 'followers', 'formatted_followers', 'following', 'formatted_following', 'likes', 'formatted_likes', 'verified', 'private', 'bio', 'url', 'avatar', 'avatar_color', 'tiktok_logo', 'tiktok_color'
+<class 'rivalapi.classes.TwitchUser'>: 'username', 'display_name', 'followers', 'viewers', 'created_at', 'description', 'avatar'
+<class 'rivalapi.classes.TwitterAuthor'>: 'screen_name', 'avatar'
+<class 'rivalapi.classes.TwitterMedia'>: 'image', 'video'
+<class 'rivalapi.classes.TwitterPost'>: 'nsfw', 'color', 'timestamp', 'text', 'url', 'like_count', 'formatted_like_count', 'retweet_count', 'formatted_retweet_count', 'raw_like_count', 'raw_retweet_count', 'author', 'media'
+<class 'rivalapi.classes.TwitterUser'>: 'error', 'username', 'nickname', 'url', 'id', 'bio', 'location', 'avatar_url', 'banner_url', 'created_at', 'verified', 'private', 'followers', 'formatted_followers', 'following', 'formatted_following', 'tweets', 'formatted_tweets', 'likes', 'raw_followers', 'raw_following', 'raw_tweets', 'raw_likes', 'color'
+<class 'rivalapi.classes.UwUify'>: 'text'
+<class 'rivalapi.classes.WeHeartItUser'>: 'username', 'display', 'avatar', 'posts', 'formatted_posts', 'hearts', 'formatted_hearts', 'link', 'location', 'collections', 'formatted_collections', 'followers', 'formatted_followers', 'following', 'formatted_following', 'badges'
