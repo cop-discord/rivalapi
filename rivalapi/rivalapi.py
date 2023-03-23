@@ -31,8 +31,8 @@ class RivalAPI(object):
     async def user(self,user_id:int):
         return await self.request(method="get",endpoint="user",params=f"?user_id={user_id}")
         
-    async def tags(self):
-        return await self.request(method="get",endpoint="tags",params=None)
+    #async def tags(self,discriminator:int):
+        #return await self.request(method="get",endpoint="tags",params=None)
             
     async def tiktok(self,url:str):
         return await self.request(method="get",endpoint=f"tiktok",params=f"?url={url}")
@@ -67,7 +67,7 @@ class RivalAPI(object):
 
     async def tags(self,discriminator:str):
         try:
-            request = await self.request(method="get",endpoint="/tags",params=None)
+            request = await self.request(method="get",endpoint="tags",params=None)
             tags = reversed(request[discriminator])
             return tags
         except Exception as e:
