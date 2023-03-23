@@ -67,8 +67,10 @@ class RivalAPI(object):
 
     async def tags(self,discriminator:str):
         try:
-            request = await self.request(method="get",endpoint="tags",params=None)
-            tags = reversed(request[discriminator])
+            async with aiohttp.ClientSession() as session:
+                async with session.get(self.base_url+"tags",headers={'api-key':self.__api_key}) as f:
+                    t=await f.json()
+            tags = reversed(t[discriminator])
             return tags
         except Exception as e:
             return None
