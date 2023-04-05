@@ -10,7 +10,7 @@ setup(
   url = 'https://github.com/cop-discord/rivalapi/',   # Provide either the link to your github or to your website
   keywords = ['rivalapi', 'rival', 'api'],   # Keywords that define your package best
   install_requires=[
-          'aiohttp','orjson','asyncio','humanize'
+          'aiohttp','orjson','asyncio','humanize','munch'
       ],
   classifiers=[
     'Development Status :: 5 - Production/Stable',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
