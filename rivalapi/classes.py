@@ -1,6 +1,8 @@
 import typing
 from dataclasses import dataclass
 import humanize
+from munch import Munch,DefaultMunch
+
 def format_integer(value:int):
     val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
     return val
@@ -545,5 +547,74 @@ class MedalPost(object):
         return self.dict.get('url')
 
 
+class InstagramUser(object):
+    def __init__(self,dict):
+        self.dict = dict
+    
+    @property
+    def pk(self):
+        return self.dict.get('pk')
+    
+    @property
+    def username(self):
+        return self.dict.get('username')
+    
+    @property
+    def full_name(self):
+        return self.dict.get('full_name')
+    
+    @property
+    def is_private(self):
+        return self.dict.get('is_private')
 
+    @property
+    def profile_pic_url(self):
+        return self.dict.get('profile_pic_url')
 
+    @property
+    def profile_pic_url_hd(self):
+        return self.dict.get('profile_pic_url_hd')
+    
+    @property
+    def is_verified(self):
+        return self.dict.get('is_verified')
+
+    @property
+    def media_count(self):
+        return self.dict.get('media_count')
+    
+    @property
+    def follower_count(self):
+        return self.dict.get('follower_count')
+    
+    @property
+    def following_count(self):
+        return self.dict.get('following_count')
+    
+    @property
+    def biography(self):
+        return self.dict.get('biography')
+    
+    @property
+    def external_url(self):
+        return self.dict.get('external_url')
+    
+    @property
+    def account_type(self):
+        return self.dict.get('account_type')
+    
+    @property
+    def is_business(self):
+        return self.dict.get('is_business')
+
+    @property
+    def public_email(self):
+        return self.dict.get('public_email')
+
+class Universal(object):
+    def __init__(self,dict):
+        self.dict = dict
+    
+    def to_obj(self):
+        obj=DefaultMunch.fromDict(self.dict,object())
+        return obj

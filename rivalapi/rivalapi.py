@@ -1,10 +1,82 @@
 import aiohttp,asyncio,orjson,typing,discord,io
-from .classes import WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
+from .classes import Universal,InstagramUser,InstagramMedia,InstagramStoryRequest,WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
 import humanize
 
 def format_integer(value:int):
     val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
     return val
+
+class RivalInstagramAPI(object):
+    def __init__(self, api_key, username, password, proxy):
+        self.__api_key = api_key
+        self.username = username
+        self.password = password
+        self.proxy = proxy
+        self.session_id = None
+    
+    async def instagram_auth(self,username:str=None,password:str=None,proxy:str=None):
+        if username == None:
+            username = self.username
+        if password == None:
+            password = self.password
+        if proxy == None:
+            proxy = self.proxy
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"https://api.rival.rocks/instagram/auth/login",data={'username':username,'password':password,'proxy':proxy},headers={'api-key':self.__api_key}) as f:
+                data=str(await f.text())
+        self.session_id = data
+        return self.session_id
+    
+    async def session_id(self):
+        if self.session_id == None:
+            return await self.instagram_auth(self.username,self.password,self.proxy)
+
+    
+    async def instagram_user(self,user:str,sessionid:str=None):
+        if sessionid == None:
+            sessionid = await self.session_id()
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"https://api.rival.rocks/instagram/user/info",data={'username':user,'sessionid':sessionid},headers={'api-key':self.__api_key}) as f:
+                if f.status == 500:
+                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                        if relogin.status == 500:
+                            await self.instagram_auth(self.username,self.password,self.proxy)
+                            async with session.post(f"https://api.rival.rocks/instagram/user/info",data={'username':user,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
+                                data=await nf.json()
+                else:
+                    data=await f.json()
+            return Universal(data).to_obj()
+        
+    async def instagram_media(self,url:str,sessionid:str=None):
+        if sessionid == None:
+            sessionid = await self.session_id()
+        async with aiohttp.ClientSession() as session:
+            async with session.post("https://api.rival.rocks/instagram/media/info",data={'url':url,'sessionid':sessionid},headers={'api-key':self__api_key}) as f:
+                if f.status == 500:
+                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                        if relogin.status == 500:
+                            await self.instagram_auth(self.username,self.password,self.proxy)
+                            async with session.post("https://api.rival.rocks/instagram/media/info",data={'url':url,'sessionid':sessionid},headers={'api-key':self__api_key}) as nf:
+                                data=await nf.json()
+                else:
+                    data=await f.json()
+            return Universal(data).to_obj()
+        
+    async def instagram_story(self,username:str,sessionid:str=None):
+        if sessionid == None:
+            sessionid = await self.session_id()
+        async with aiohttp.ClientSession() as session:
+            async with session.post("https://api.rival.rocks/instagram/story/user_stories",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as f:
+                if f.status == 500:
+                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                        if relogin.status == 500:
+                            await self.instagram_auth(self.username,self.password,self.proxy)
+                            async with session.post("https://api.rival.rocks/instagram/story/user_stories",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
+                                data=await nf.json()
+                else:
+                    data=await f.json()
+            return Universal(data).to_obj()
+        
 
 class RivalAPI(object):
     def __init__(self, api_key):
@@ -31,8 +103,9 @@ class RivalAPI(object):
     async def user(self,user_id:int):
         return await self.request(method="get",endpoint="user",params=f"?user_id={user_id}")
         
-    #async def tags(self,discriminator:int):
-        #return await self.request(method="get",endpoint="tags",params=None)
+    async def tags(self,discriminator:int):
+        return await self.request(method="get",endpoint="tags",params=None)
+
             
     async def tiktok(self,url:str):
         return await self.request(method="get",endpoint=f"tiktok",params=f"?url={url}")
