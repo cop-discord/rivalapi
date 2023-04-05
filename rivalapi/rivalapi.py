@@ -1,5 +1,5 @@
 import aiohttp,asyncio,orjson,typing,discord,io
-from .classes import Universal,InstagramUser,InstagramMedia,InstagramStoryRequest,WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
+from .classes import Universal,WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
 import humanize
 
 def format_integer(value:int):
