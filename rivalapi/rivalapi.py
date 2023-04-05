@@ -12,7 +12,7 @@ class RivalInstagramAPI(object):
         self.username = username
         self.password = password
         self.proxy = proxy
-        self.session_id = None
+        self.sessionid = None
     
     async def instagram_auth(self,username:str=None,password:str=None,proxy:str=None):
         if username == None:
@@ -24,11 +24,11 @@ class RivalInstagramAPI(object):
         async with aiohttp.ClientSession() as session:
             async with session.post(f"https://api.rival.rocks/instagram/auth/login",data={'username':username,'password':password,'proxy':proxy},headers={'api-key':self.__api_key}) as f:
                 data=str(await f.text())
-        self.session_id = data
-        return self.session_id
+        self.sessionid = data
+        return self.sessionid
     
     async def session_id(self):
-        if self.session_id == None:
+        if self.sessionid == None:
             return await self.instagram_auth(self.username,self.password,self.proxy)
 
     
