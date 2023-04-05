@@ -38,7 +38,7 @@ class RivalInstagramAPI(object):
         async with aiohttp.ClientSession() as session:
             async with session.post(f"https://api.rival.rocks/instagram/user/info",data={'username':user,'sessionid':sessionid},headers={'api-key':self.__api_key}) as f:
                 if f.status == 500:
-                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                    async with session.post(f"https://api.rival.rocks/instagram/auth/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
                         if relogin.status == 500:
                             await self.instagram_auth(self.username,self.password,self.proxy)
                             async with session.post(f"https://api.rival.rocks/instagram/user/info",data={'username':user,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
@@ -53,7 +53,7 @@ class RivalInstagramAPI(object):
         async with aiohttp.ClientSession() as session:
             async with session.post("https://api.rival.rocks/instagram/media/info",data={'url':url,'sessionid':sessionid},headers={'api-key':self__api_key}) as f:
                 if f.status == 500:
-                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                    async with session.post(f"https://api.rival.rocks/instagram/auth/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
                         if relogin.status == 500:
                             await self.instagram_auth(self.username,self.password,self.proxy)
                             async with session.post("https://api.rival.rocks/instagram/media/info",data={'url':url,'sessionid':sessionid},headers={'api-key':self__api_key}) as nf:
@@ -68,7 +68,7 @@ class RivalInstagramAPI(object):
         async with aiohttp.ClientSession() as session:
             async with session.post("https://api.rival.rocks/instagram/story/user_stories",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as f:
                 if f.status == 500:
-                    async with session.post(f"https://api.rival.rocks/instagram/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                    async with session.post(f"https://api.rival.rocks/instagram/auth/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
                         if relogin.status == 500:
                             await self.instagram_auth(self.username,self.password,self.proxy)
                             async with session.post("https://api.rival.rocks/instagram/story/user_stories",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
