@@ -1,5 +1,0 @@
-aiohttp
-orjson
-asyncio
-discord
-munch
