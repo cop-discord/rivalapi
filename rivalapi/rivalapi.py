@@ -87,12 +87,12 @@ class RivalInstagramAPI(object):
         if sessionid == None:
             sessionid = await self.session_id()
         async with aiohttp.ClientSession() as session:
-            async with session.post(f"https://api.rival.rocks/instagram/media/user_medias",data={'sessionid':sessionid,'username':username},headers={'api-key':self.__api_key}) as f:
+            async with session.post(f"https://api.rival.rocks/instagram/media/user_medias/",data={'sessionid':sessionid,'username':username},headers={'api-key':self.__api_key}) as f:
                 if f.status == 500:
                     async with session.post(f"https://api.rival.rocks/instagram/auth/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
                         if relogin.status == 500:
                             await self.instagram_auth(self.username,self.password,self.proxy)
-                            async with session.post("https://api.rival.rocks/instagram/media/user_medias",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
+                            async with session.post("https://api.rival.rocks/instagram/media/user_medias/",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
                                 data=await nf.json()
                 else:
                     data=await f.json()
