@@ -1,10 +1,14 @@
 import aiohttp,asyncio,orjson,typing,discord,io
 from .classes import Universal,WeHeartItUser,GoogleImage,GoogleSearch,Oxford,UwUify,TwitterUser,TwitterPost,TwitchUser,MedalPost,TwitterMedia,TwitterAuthor,GoogleImageRequest,GoogleSearchRequest,TikTokUser
 import humanize
+from munch import Munch,DefaultMunch
 
 def format_integer(value:int):
     val=humanize.intword(value).replace(" thousand","k").replace(" million","m").replace(" billion","b")
     return val
+
+def dict_to_object(data):
+    return DefaultMunch.fromDict(data,object())
 
 class RivalInstagramAPI(object):
     def __init__(self, api_key, username, password, proxy):
@@ -74,6 +78,21 @@ class RivalInstagramAPI(object):
                         if relogin.status == 500:
                             await self.instagram_auth(self.username,self.password,self.proxy)
                             async with session.post("https://api.rival.rocks/instagram/story/user_stories",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
+                                data=await nf.json()
+                else:
+                    data=await f.json()
+            return Universal(data).to_obj()
+
+    async def instagram_user_posts(self,username:str,sessionid:str=None):
+        if sessionid == None:
+            sessionid = await self.session_id()
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"https://api.rival.rocks/instagram/medias/user_medias",data={'sessionid':sessionid,'username':username},headers={'api-key':self.__api_key}) as f:
+                if f.status == 500:
+                    async with session.post(f"https://api.rival.rocks/instagram/auth/relogin",data={'sessionid':sessionid},headers={'api-key':self.__api_key}) as relogin:
+                        if relogin.status == 500:
+                            await self.instagram_auth(self.username,self.password,self.proxy)
+                            async with session.post("https://api.rival.rocks/instagram/media/user_medias",data={'username':username,'sessionid':sessionid},headers={'api-key':self.__api_key}) as nf:
                                 data=await nf.json()
                 else:
                     data=await f.json()
